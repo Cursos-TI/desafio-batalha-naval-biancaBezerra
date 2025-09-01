@@ -1,41 +1,95 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
-// Desafio Batalha Naval - MateCheck
-// Este código inicial serve como base para o desenvolvimento do sistema de Batalha Naval.
-// Siga os comentários para implementar cada parte do desafio.
+#define LINHAS 10
+#define COLUNAS 10
+
+
 
 int main() {
-    // Nível Novato - Posicionamento dos Navios
-    // Sugestão: Declare uma matriz bidimensional para representar o tabuleiro (Ex: int tabuleiro[5][5];).
-    // Sugestão: Posicione dois navios no tabuleiro, um verticalmente e outro horizontalmente.
-    // Sugestão: Utilize `printf` para exibir as coordenadas de cada parte dos navios.
 
-    int tabuleiro[5][5] = {
-      {3,0,0,0,0},
-      {3,0,0,0,0},
-      {3,0,0,0,0},
-      {0,3,3,3,0},
-      {0,0,0,0,0}
-    };
+  srand(time(0));
 
-    printf("\nJOGO BATALHA NAVAL 🚢\n\n");
+  int tamanhoNavio = 3;
+  int linhaInicialV = rand() % (LINHAS - tamanhoNavio + 1);
+  int colunaInicialV = rand() % COLUNAS;
+  int linhaInicialH = rand() % LINHAS;
+  int colunaInicialH = rand() % (COLUNAS - tamanhoNavio + 1);
+  int linhaInicialD1 = rand() % (LINHAS - tamanhoNavio + 1);
+  int colunaInicialD1 = rand() % (COLUNAS - tamanhoNavio + 1);
+  int linhaInicialD2 = rand() % (LINHAS - tamanhoNavio + 1);
+  int colunaInicialD2 = rand() % (COLUNAS - tamanhoNavio + 1) + (tamanhoNavio - 1);
 
-    for (int i = 0; i <= 4; i++){
-      for (int j = 0; j <= 4; j++){
-        printf("%d ", tabuleiro[i][j]);
+  int tabuleiro[LINHAS][COLUNAS] = {
+    {0,0,0,0,0,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0}
+  };
+
+  //POSIÇÃO NAVIO VERTICAL
+  if (linhaInicialV + tamanhoNavio <= LINHAS){
+    for (int k = 0; k < tamanhoNavio; k++){
+      if (tabuleiro[linhaInicialV + k][colunaInicialV] == 0) {
+        tabuleiro[linhaInicialV + k][colunaInicialV] = 3;
       }
-      printf("\n");
-    };
-
-    printf("\nCOORDENADAS DOS NAVIOS 🚢\n\n");
-
-    for (int i = 0; i <= 4; i++){
-      for (int j = 0; j <= 4; j++){
-        if (tabuleiro[i][j] == 3){
-          printf("(%d, %d)\n", i, j );
+    }
+  }
+  
+  //POSIÇÃO NAVIO HORIZONTAL
+  if (colunaInicialH + tamanhoNavio <= COLUNAS){
+      for (int k = 0; k < tamanhoNavio; k++){
+        if (tabuleiro[linhaInicialH][colunaInicialH + k] == 0) {
+          tabuleiro[linhaInicialH][colunaInicialH + k] = 3;
         }
       }
     }
+
+  //POSIÇÃO NAVIO DIAGONAL ESQ. - DIR.
+  if ((linhaInicialD1 + tamanhoNavio <= LINHAS) && (colunaInicialD1 + tamanhoNavio <= COLUNAS)){
+    for (int k = 0; k < tamanhoNavio; k++){
+      if (tabuleiro[linhaInicialD1 + k][colunaInicialD1 + k] == 0) {
+        tabuleiro[linhaInicialD1 + k][colunaInicialD1 + k] = 3;
+      }
+    }
+  }
+
+  //POSIÇÃO NAVIO DIAGONAL DIR. - ESQ.
+  if ((colunaInicialD2 + tamanhoNavio <= COLUNAS) && (linhaInicialD2 + tamanhoNavio <= LINHAS)){
+    for (int k = 0; k < tamanhoNavio; k++){
+      if (tabuleiro[linhaInicialD2 + k][colunaInicialD2 - k] == 0) {
+        tabuleiro[linhaInicialD2 + k][colunaInicialD2 - k] = 3;
+      }
+    }
+  }
+
+
+  printf("\nJOGO BATALHA NAVAL 🚢\n\n");
+
+  for (int i = 0; i < LINHAS; i++){
+    for (int j = 0; j < COLUNAS; j++){
+      printf("%d ", tabuleiro[i][j]);
+    }
+    printf("\n");
+  };
+
+
+  printf("\nCOORDENADAS DOS NAVIOS 🚢\n\n");
+
+  for (int i = 0; i < LINHAS; i++){
+    for (int j = 0; j < COLUNAS; j++){
+      if (tabuleiro[i][j] == 3){
+        printf("(%d, %d)\n", i, j );
+      }
+    }
+  }
 
     
 
